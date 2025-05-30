@@ -13,11 +13,11 @@ func enter() -> void:
 func exit() -> void:
 	pass
 
-func process_input(event: InputEvent):
+func process_input(_event: InputEvent):
 	return null
 
-func process_physics(delta: float):
+func process_physics(_delta: float):
 	return null
 
-func process_frame(delta: float):
+func process_frame(_delta: float):
 	return null

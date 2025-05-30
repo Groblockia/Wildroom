@@ -20,6 +20,7 @@ DECCELERATION_SPEED = 11
 SPEED = 5
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("CapsuleMesh_fhl08")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -29,22 +30,20 @@ shape = SubResource("CapsuleShape3D_k53q1")
 script = ExtResource("2_k53q1")
 starting_state = NodePath("Idle")
 
-[node name="Moving" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "jumping_state", "falling_state")]
+[node name="Moving" type="Node" parent="StateMachine" node_paths=PackedStringArray("jumping_state", "falling_state", "idle_state")]
 script = ExtResource("3_fhl08")
-idle_state = NodePath("../Idle")
 jumping_state = NodePath("../Jumping")
 falling_state = NodePath("../Falling")
+idle_state = NodePath("../Idle")
 
-[node name="Jumping" type="Node" parent="StateMachine" node_paths=PackedStringArray("falling_state", "idle_state", "moving_state")]
+[node name="Jumping" type="Node" parent="StateMachine" node_paths=PackedStringArray("falling_state")]
 script = ExtResource("4_vtle1")
 falling_state = NodePath("../Falling")
-idle_state = NodePath("../Idle")
-moving_state = NodePath("../Moving")
 
-[node name="Falling" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "moving_state")]
+[node name="Falling" type="Node" parent="StateMachine" node_paths=PackedStringArray("moving_state", "idle_state")]
 script = ExtResource("5_od3ui")
-idle_state = NodePath("../Idle")
 moving_state = NodePath("../Moving")
+idle_state = NodePath("../Idle")
 
 [node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("moving_state", "jumping_state", "falling_state")]
 script = ExtResource("6_fhl08")
@@ -52,11 +51,20 @@ moving_state = NodePath("../Moving")
 jumping_state = NodePath("../Jumping")
 falling_state = NodePath("../Falling")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.894342, 0.447385, 0, -0.447385, 0.894342, 0, 1.6269, 1.43721)
+[node name="camera_pivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.71174, 0)
 
-[node name="Label" type="Label" parent="Camera3D"]
-offset_right = 35.0
-offset_bottom = 23.0
+[node name="Camera3D" type="Camera3D" parent="camera_pivot"]
+
+[node name="debug_UI" type="Control" parent="camera_pivot/Camera3D"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="camera_pivot/Camera3D/debug_UI"]
+layout_mode = 0
+offset_right = 77.0
+offset_bottom = 50.0
 theme_override_font_sizes/font_size = 36
 text = "caca"

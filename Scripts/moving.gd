@@ -1,8 +1,8 @@
 extends State
 
-@export var idle_state : State
 @export var jumping_state : State
 @export var falling_state : State
+@export var idle_state : State
 
 func enter():
 	super()
@@ -26,4 +26,3 @@ func process_physics(delta):
 	if Input.is_action_just_pressed("jump"):
 		return jumping_state
 	
-

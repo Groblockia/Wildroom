@@ -1,7 +1,7 @@
 extends State
 
-@export var idle_state : State
 @export var moving_state : State
+@export var idle_state : State
 
 func enter():
 	super()

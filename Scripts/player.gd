@@ -7,24 +7,56 @@ extends CharacterBody3D
 @export var JUMP_VELOCITY = 5
 @export var SPEED = 4
 
+
+@onready var state_machine = $StateMachine
+@onready var state_label = $camera_pivot/Camera3D/debug_UI/Label
+@onready var camera = $camera_pivot/Camera3D
+@onready var camera_pivot = $camera_pivot
+
 var input_dir : Vector2
 var direction :Vector3
 
-@onready var state_machine = $StateMachine
-@onready var state_label = $Camera3D/Label
+var rot_x = 0.0 # horizontal
+var rot_y = 0.0 # vertical
+
+const SENSITIVITY = 0.005
+const MAX_VERTICAL_ANGLE = deg_to_rad(89)
+
+
 
 func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	state_machine.init(self)
 
 func _unhandled_input(event: InputEvent) -> void:
 	state_machine.process_input(event)
+	#camera movement
+	if event is InputEventMouseMotion && Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		rot_x += event.relative.x * SENSITIVITY
+		rot_y += event.relative.y * SENSITIVITY
+		rot_y = clamp(rot_y, -MAX_VERTICAL_ANGLE, MAX_VERTICAL_ANGLE)
+
+		# Rotation horizontale sur le Player
+		rotation.y = -rot_x
+
+		# Rotation verticale sur la tête
+		camera_pivot.rotation.x = -rot_y
 
 func _physics_process(delta: float) -> void:
 	state_machine.process_physics(delta)
 
 	input_dir = Input.get_vector("left", "right", "forward", "backward")
 	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	
 
 func _process(delta):
 	state_machine.process_frame(delta)
+
+	#DEBUG
+	if Input.is_action_just_pressed("quit"):
+		get_tree().quit()
+	
+	if Input.is_action_just_pressed("mouse_tab"):
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
