@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://kw2yhxm71ddj"]
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+
+[node name="StateMachine" type="Node" parent="."]
+
+[node name="Moving" type="Node" parent="StateMachine"]
+
+[node name="Jumping" type="Node" parent="StateMachine"]
+
+[node name="Falling" type="Node" parent="StateMachine"]
