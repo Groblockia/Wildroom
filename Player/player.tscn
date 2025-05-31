@@ -1,13 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://kw2yhxm71ddj"]
+[gd_scene load_steps=8 format=3 uid="uid://kw2yhxm71ddj"]
 
-[ext_resource type="Script" uid="uid://dqm1cfwcdxjfd" path="res://Scripts/player.gd" id="1_l8h54"]
-[ext_resource type="Script" uid="uid://dt1xk1l6cl4fw" path="res://Scripts/state_machine.gd" id="2_k53q1"]
-[ext_resource type="Script" uid="uid://cidy0bdb4nghc" path="res://Scripts/moving.gd" id="3_fhl08"]
-[ext_resource type="Script" uid="uid://d1qqjkkjcwjo2" path="res://Scripts/jumping.gd" id="4_vtle1"]
-[ext_resource type="Script" uid="uid://ce2psm8kmakot" path="res://Scripts/falling.gd" id="5_od3ui"]
-[ext_resource type="Script" uid="uid://df66y12g1xr1d" path="res://Scripts/idle.gd" id="6_fhl08"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_fhl08"]
+[ext_resource type="Script" uid="uid://dqm1cfwcdxjfd" path="res://Scripts/Player_State_Machine/player.gd" id="1_l8h54"]
+[ext_resource type="Script" uid="uid://dt1xk1l6cl4fw" path="res://Scripts/Player_State_Machine/state_machine.gd" id="2_k53q1"]
+[ext_resource type="Script" uid="uid://cidy0bdb4nghc" path="res://Scripts/Player_State_Machine/moving.gd" id="3_fhl08"]
+[ext_resource type="Script" uid="uid://d1qqjkkjcwjo2" path="res://Scripts/Player_State_Machine/jumping.gd" id="4_vtle1"]
+[ext_resource type="Script" uid="uid://ce2psm8kmakot" path="res://Scripts/Player_State_Machine/falling.gd" id="5_od3ui"]
+[ext_resource type="Script" uid="uid://df66y12g1xr1d" path="res://Scripts/Player_State_Machine/idle.gd" id="6_fhl08"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_k53q1"]
 
@@ -15,13 +13,9 @@
 collision_layer = 2
 collision_mask = 13
 script = ExtResource("1_l8h54")
-ACCELERATION_SPEED = 5
+ACCELERATION_SPEED = 9
 DECCELERATION_SPEED = 11
-SPEED = 5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-visible = false
-mesh = SubResource("CapsuleMesh_fhl08")
+SPEED = 6
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_k53q1")

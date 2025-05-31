@@ -16,16 +16,13 @@ func process_physics(delta):
 
 	#if in the air:
 	if !parent.is_on_floor():
-		print("rentrer en falling_state")
 		return falling_state
 
 	#if trying to jump
 	if Input.is_action_just_pressed("jump") and parent.is_on_floor():
-		print("passage a jumping_state")
 		return jumping_state
 	
 	#if trying to move
 	if Input.get_vector("forward", "backward", "left", "right") != Vector2.ZERO:
-		print("passage a moving_state")
 		return moving_state
 	

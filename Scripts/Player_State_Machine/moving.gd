@@ -15,7 +15,6 @@ func process_physics(delta):
 
 	#if in the air
 	if !parent.is_on_floor():
-		print("rentrer en falling_state")
 		return falling_state
 	
 	#if no movement
@@ -25,4 +24,3 @@ func process_physics(delta):
 	#if trying to jump
 	if Input.is_action_just_pressed("jump"):
 		return jumping_state
-	
