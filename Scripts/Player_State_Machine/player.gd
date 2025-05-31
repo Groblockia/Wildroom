@@ -12,6 +12,7 @@ extends CharacterBody3D
 @onready var state_label = $camera_pivot/Camera3D/debug_UI/Label
 @onready var camera = $camera_pivot/Camera3D
 @onready var camera_pivot = $camera_pivot
+@onready var raycast = $camera_pivot/Camera3D/RayCast3D
 
 var input_dir : Vector2
 var direction :Vector3
@@ -30,6 +31,7 @@ func _ready():
 
 func _unhandled_input(event: InputEvent) -> void:
 	state_machine.process_input(event)
+
 	#camera movement
 	if event is InputEventMouseMotion && Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		rot_x += event.relative.x * SENSITIVITY
@@ -45,11 +47,14 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	state_machine.process_physics(delta)
 
+	#player movement
 	input_dir = Input.get_vector("left", "right", "forward", "backward")
 	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
 func _process(delta):
 	state_machine.process_frame(delta)
+
+	if Input.is_action_just_pressed("interact"): interact()
 
 	#DEBUG
 	if Input.is_action_just_pressed("quit"):
@@ -60,3 +65,13 @@ func _process(delta):
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func interact():
+	var obj = raycast.get_collider()
+	print(obj)
+
+	
+	if obj == null:
+		pass
+	elif obj.is_in_group("lever"):
+		obj.toggle()

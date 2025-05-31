@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://c14s2x05mxlf5"]
+[gd_scene load_steps=8 format=3 uid="uid://c14s2x05mxlf5"]
 
 [ext_resource type="PackedScene" uid="uid://kw2yhxm71ddj" path="res://Player/player.tscn" id="1_p4erq"]
 [ext_resource type="Texture2D" uid="uid://cpeux5xuf4dpn" path="res://icon.svg" id="2_f87w0"]
 [ext_resource type="PackedScene" uid="uid://bk6gomcv3783o" path="res://Collectibles/collectible_test.tscn" id="3_afen0"]
 [ext_resource type="PackedScene" uid="uid://bae4nrs1qnbqn" path="res://Misc/Collectible_counter.tscn" id="4_f87w0"]
+[ext_resource type="PackedScene" uid="uid://camrd3a4cawf1" path="res://Misc/lever.tscn" id="5_afen0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qc4db"]
 albedo_texture = ExtResource("2_f87w0")
@@ -56,3 +57,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.82369, 1.06982, -4.51454)
 
 [node name="Collectible_counter" parent="." instance=ExtResource("4_f87w0")]
 transform = Transform3D(-0.886171, 0, 0.463358, 0, 1, 0, -0.463358, 0, -0.886171, -3.46162, 1.37579, 3.14925)
+
+[node name="CSGCombiner3D" parent="." instance=ExtResource("5_afen0")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.64901, 1.52287, 4.51542)

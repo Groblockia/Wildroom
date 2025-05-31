@@ -11,7 +11,7 @@
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 collision_layer = 2
-collision_mask = 13
+collision_mask = 5
 script = ExtResource("1_l8h54")
 ACCELERATION_SPEED = 9
 DECCELERATION_SPEED = 11
@@ -49,6 +49,10 @@ falling_state = NodePath("../Falling")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.71174, 0)
 
 [node name="Camera3D" type="Camera3D" parent="camera_pivot"]
+
+[node name="RayCast3D" type="RayCast3D" parent="camera_pivot/Camera3D"]
+target_position = Vector3(0, 0, -3)
+collision_mask = 8
 
 [node name="debug_UI" type="Control" parent="camera_pivot/Camera3D"]
 layout_mode = 3
