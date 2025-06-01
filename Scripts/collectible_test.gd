@@ -1,8 +1,12 @@
 extends Area3D
-	
+
+signal collectible_collected
+
+func _ready() -> void:
+	collectible_collected.connect(Global._collectible_collected)
 
 func _on_body_entered(_body: Node3D) -> void:
-	Global.collectible_count += 1
+	collectible_collected.emit()
 	queue_free()
 
 func _process(_delta: float) -> void:

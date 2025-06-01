@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://c14s2x05mxlf5"]
+[gd_scene load_steps=9 format=3 uid="uid://c14s2x05mxlf5"]
 
 [ext_resource type="PackedScene" uid="uid://kw2yhxm71ddj" path="res://Player/player.tscn" id="1_p4erq"]
 [ext_resource type="Texture2D" uid="uid://cpeux5xuf4dpn" path="res://icon.svg" id="2_f87w0"]
-[ext_resource type="PackedScene" uid="uid://bk6gomcv3783o" path="res://Collectibles/collectible_test.tscn" id="3_afen0"]
+[ext_resource type="PackedScene" uid="uid://bk6gomcv3783o" path="res://Collectibles/collectible.tscn" id="3_afen0"]
 [ext_resource type="PackedScene" uid="uid://bae4nrs1qnbqn" path="res://Misc/Collectible_counter.tscn" id="4_f87w0"]
 [ext_resource type="PackedScene" uid="uid://camrd3a4cawf1" path="res://Misc/lever.tscn" id="5_afen0"]
+[ext_resource type="PackedScene" uid="uid://d1xbwckpdahqd" path="res://Misc/Rule_counter.tscn" id="6_w4v7x"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qc4db"]
 albedo_texture = ExtResource("2_f87w0")
@@ -32,31 +33,72 @@ shape = SubResource("ConcavePolygonShape3D_lc1oi")
 [node name="OmniLight3D" type="OmniLight3D" parent="StaticBody3D/CSGBakedCollisionShape3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 2)
 
-[node name="Node" type="Node" parent="."]
+[node name="collectibles" type="Node" parent="."]
 
-[node name="Collectible_test" parent="Node" instance=ExtResource("3_afen0")]
+[node name="Collectible_test" parent="collectibles" instance=ExtResource("3_afen0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.55588, 1.06982, -3.1431)
 
-[node name="Collectible_test2" parent="Node" instance=ExtResource("3_afen0")]
+[node name="Collectible_test2" parent="collectibles" instance=ExtResource("3_afen0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.58413, 1.06982, -3.1431)
 
-[node name="Collectible_test3" parent="Node" instance=ExtResource("3_afen0")]
+[node name="Collectible_test3" parent="collectibles" instance=ExtResource("3_afen0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.681109, 1.06982, -2.0926)
 
-[node name="Collectible_test4" parent="Node" instance=ExtResource("3_afen0")]
+[node name="Collectible_test4" parent="collectibles" instance=ExtResource("3_afen0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.78141, 1.06982, -4.94002)
 
-[node name="Collectible_test5" parent="Node" instance=ExtResource("3_afen0")]
+[node name="Collectible_test5" parent="collectibles" instance=ExtResource("3_afen0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.22913, 1.06982, -5.11319)
 
-[node name="Collectible_test6" parent="Node" instance=ExtResource("3_afen0")]
+[node name="Collectible_test6" parent="collectibles" instance=ExtResource("3_afen0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.47969, 1.06982, -1.63175)
 
-[node name="Collectible_test7" parent="Node" instance=ExtResource("3_afen0")]
+[node name="Collectible_test7" parent="collectibles" instance=ExtResource("3_afen0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.82369, 1.06982, -4.51454)
+
+[node name="Collectible_test8" parent="collectibles" instance=ExtResource("3_afen0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.40728, 1.06982, -0.855332)
+
+[node name="Collectible_test9" parent="collectibles" instance=ExtResource("3_afen0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36607, 1.06982, 1.31792)
+
+[node name="Collectible_test10" parent="collectibles" instance=ExtResource("3_afen0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3856, 1.06982, -4.93958)
+
+[node name="Collectible_test11" parent="collectibles" instance=ExtResource("3_afen0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.19071, 1.06982, -1.42955)
+
+[node name="Collectible_test12" parent="collectibles" instance=ExtResource("3_afen0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.80597, 1.06982, 1.20816)
+
+[node name="Collectible_test13" parent="collectibles" instance=ExtResource("3_afen0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.24523, 1.06982, 1.94362)
+
+[node name="Collectible_test14" parent="collectibles" instance=ExtResource("3_afen0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.73256, 1.06982, 0.0763135)
 
 [node name="Collectible_counter" parent="." instance=ExtResource("4_f87w0")]
 transform = Transform3D(-0.886171, 0, 0.463358, 0, 1, 0, -0.463358, 0, -0.886171, -3.46162, 1.37579, 3.14925)
 
-[node name="CSGCombiner3D" parent="." instance=ExtResource("5_afen0")]
+[node name="interactibles" type="Node" parent="."]
+
+[node name="CSGCombiner3D" parent="interactibles" instance=ExtResource("5_afen0")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.64901, 1.52287, 4.51542)
+
+[node name="CSGCombiner3D2" parent="interactibles" instance=ExtResource("5_afen0")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1.06585, 1.52287, 4.51542)
+
+[node name="CSGCombiner3D3" parent="interactibles" instance=ExtResource("5_afen0")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1.5917, 1.52287, 4.51542)
+
+[node name="CSGCombiner3D4" parent="interactibles" instance=ExtResource("5_afen0")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.13645, 1.52287, 4.51542)
+
+[node name="CSGCombiner3D5" parent="interactibles" instance=ExtResource("5_afen0")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.53511, 1.52287, 4.51542)
+
+[node name="CSGCombiner3D6" parent="interactibles" instance=ExtResource("5_afen0")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.88717, 1.52287, 4.51542)
+
+[node name="rule_counter" parent="." instance=ExtResource("6_w4v7x")]
+transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, -1.8991, 1.45815, 3.50063)

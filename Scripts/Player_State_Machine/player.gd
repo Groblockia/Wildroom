@@ -68,9 +68,7 @@ func _process(delta):
 
 func interact():
 	var obj = raycast.get_collider()
-	print(obj)
 
-	
 	if obj == null:
 		pass
 	elif obj.is_in_group("lever"):
