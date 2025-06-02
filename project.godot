@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Wildroom"
-run/main_scene="uid://c14s2x05mxlf5"
+run/main_scene="uid://cewhlpr4pxsoq"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
