@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://jw3iuid1sak5"]
+
+[ext_resource type="Script" uid="uid://dglcwuqqmroah" path="res://Scripts/exit_door.gd" id="1_dnkup"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5jmyc"]
+size = Vector3(0.25, 3, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dnkup"]
+size = Vector3(1.50415, 0.483826, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_byiub"]
+size = Vector3(1.60352, 1.89307, 1)
+
+[node name="exit_door" type="StaticBody3D"]
+collision_mask = 2
+script = ExtResource("1_dnkup")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.876709, 0, 0)
+shape = SubResource("BoxShape3D_5jmyc")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.875, 0, 0)
+shape = SubResource("BoxShape3D_5jmyc")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25406, 0)
+shape = SubResource("BoxShape3D_dnkup")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+collision_mask = 0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+size = Vector3(2, 3, 1)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.256123, 0.00404358)
+operation = 2
+size = Vector3(1.5, 2.52344, 1.03464)
+
+[node name="checkpoint_collider" type="Area3D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="checkpoint_collider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.446533, -1.45319)
+shape = SubResource("BoxShape3D_byiub")
+
+[connection signal="body_entered" from="checkpoint_collider" to="." method="_on_checkpoint_collider_body_entered"]

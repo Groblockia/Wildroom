@@ -7,7 +7,6 @@ extends CharacterBody3D
 @export var JUMP_VELOCITY = 5
 @export var SPEED = 4
 
-
 @onready var state_machine = $StateMachine
 @onready var state_label = $camera_pivot/Camera3D/debug_UI/Label
 @onready var camera = $camera_pivot/Camera3D
