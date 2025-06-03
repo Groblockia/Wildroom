@@ -267,3 +267,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.93, 1, -57.895)
 
 [node name="Collectible10" parent="Node" instance=ExtResource("4_1q67n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.528, 7.06065, -59.9562)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.57812, 1.74488, -3.42825)
+omni_range = 9.5216

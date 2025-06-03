@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://kw2yhxm71ddj"]
+[gd_scene load_steps=14 format=3 uid="uid://kw2yhxm71ddj"]
 
 [ext_resource type="Script" uid="uid://dqm1cfwcdxjfd" path="res://Scripts/Player_State_Machine/player.gd" id="1_l8h54"]
 [ext_resource type="Script" uid="uid://dt1xk1l6cl4fw" path="res://Scripts/Player_State_Machine/state_machine.gd" id="2_k53q1"]
@@ -6,10 +6,40 @@
 [ext_resource type="Script" uid="uid://d1qqjkkjcwjo2" path="res://Scripts/Player_State_Machine/jumping.gd" id="4_vtle1"]
 [ext_resource type="Script" uid="uid://ce2psm8kmakot" path="res://Scripts/Player_State_Machine/falling.gd" id="5_od3ui"]
 [ext_resource type="Script" uid="uid://df66y12g1xr1d" path="res://Scripts/Player_State_Machine/idle.gd" id="6_fhl08"]
+[ext_resource type="Shader" uid="uid://cytbtjvdw7gkw" path="res://Player/vignette.gdshader" id="7_vtle1"]
+[ext_resource type="Shader" uid="uid://dcx86sijad55c" path="res://Player/psx_style.gdshader" id="8_od3ui"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_k53q1"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_fhl08"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_od3ui"]
+shader = ExtResource("7_vtle1")
+shader_parameter/inner_radius = 0.2
+shader_parameter/outer_radius = 1.0
+shader_parameter/vignette_strength = 0.7
+shader_parameter/dither_strength = 0.0
+shader_parameter/vignette_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_00tjw"]
+render_priority = 0
+shader = ExtResource("8_od3ui")
+shader_parameter/enable_fog = true
+shader_parameter/fog_color = Color(0.187722, 0.187722, 0.187722, 1)
+shader_parameter/noise_color = Color(0.513577, 0.513577, 0.513577, 1)
+shader_parameter/fog_distance = 10.0
+shader_parameter/fog_fade_range = 8.0
+shader_parameter/enable_noise = false
+shader_parameter/noise_time_fac = 4.0
+shader_parameter/enable_color_limitation = true
+shader_parameter/color_levels = 64
+shader_parameter/enable_dithering = true
+shader_parameter/dither_strength = 0.5
+
+[sub_resource type="QuadMesh" id="QuadMesh_vtle1"]
+material = SubResource("ShaderMaterial_00tjw")
+flip_faces = true
+size = Vector2(2, 2)
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 collision_layer = 2
@@ -55,10 +85,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.71174, 0)
 
 [node name="Camera3D" type="Camera3D" parent="camera_pivot"]
 
-[node name="RayCast3D" type="RayCast3D" parent="camera_pivot/Camera3D"]
-target_position = Vector3(0, 0, -3)
-collision_mask = 8
-
 [node name="debug_UI" type="Control" parent="camera_pivot/Camera3D"]
 layout_mode = 3
 anchors_preset = 0
@@ -71,3 +97,24 @@ offset_right = 77.0
 offset_bottom = 50.0
 theme_override_font_sizes/font_size = 36
 text = "caca"
+
+[node name="RayCast3D" type="RayCast3D" parent="camera_pivot/Camera3D"]
+target_position = Vector3(0, 0, -3)
+collision_mask = 8
+
+[node name="CanvasLayer" type="CanvasLayer" parent="camera_pivot/Camera3D"]
+follow_viewport_enabled = true
+
+[node name="ColorRect" type="ColorRect" parent="camera_pivot/Camera3D/CanvasLayer"]
+z_index = 1
+material = SubResource("ShaderMaterial_od3ui")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="camera_pivot/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+mesh = SubResource("QuadMesh_vtle1")
