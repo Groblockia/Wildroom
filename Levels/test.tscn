@@ -107,5 +107,5 @@ transform = Transform3D(-0.886171, 0, 0.463358, 0, 1, 0, -0.463358, 0, -0.886171
 [node name="exit_door1" parent="." groups=["door1"] instance=ExtResource("7_mkyii")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.19124, 2.00691, -3.18732)
 
-[node name="exit_door2" parent="." groups=["door2"] instance=ExtResource("7_mkyii")]
+[node name="exit_door2" parent="." instance=ExtResource("7_mkyii")]
 transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -4.2366, 2.00691, -5.8627)

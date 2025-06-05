@@ -31,8 +31,8 @@ shader_parameter/fog_distance = 10.0
 shader_parameter/fog_fade_range = 8.0
 shader_parameter/enable_noise = false
 shader_parameter/noise_time_fac = 4.0
-shader_parameter/enable_color_limitation = true
-shader_parameter/color_levels = 64
+shader_parameter/enable_color_limitation = false
+shader_parameter/color_levels = 512
 shader_parameter/enable_dithering = true
 shader_parameter/dither_strength = 0.5
 
@@ -103,9 +103,10 @@ target_position = Vector3(0, 0, -3)
 collision_mask = 8
 
 [node name="CanvasLayer" type="CanvasLayer" parent="camera_pivot/Camera3D"]
+visible = false
 follow_viewport_enabled = true
 
-[node name="ColorRect" type="ColorRect" parent="camera_pivot/Camera3D/CanvasLayer"]
+[node name="vignette shader" type="ColorRect" parent="camera_pivot/Camera3D/CanvasLayer"]
 z_index = 1
 material = SubResource("ShaderMaterial_od3ui")
 anchors_preset = 15
@@ -115,6 +116,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="camera_pivot/Camera3D"]
+[node name="PSX_style shader" type="MeshInstance3D" parent="camera_pivot/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+visible = false
 mesh = SubResource("QuadMesh_vtle1")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+omni_range = 8.31989

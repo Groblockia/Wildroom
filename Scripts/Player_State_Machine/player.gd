@@ -19,10 +19,8 @@ var direction :Vector3
 var rot_x = 0.0 # horizontal
 var rot_y = 0.0 # vertical
 
-const SENSITIVITY = 0.005
+const SENSITIVITY = 0.001
 const MAX_VERTICAL_ANGLE = deg_to_rad(89)
-
-
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -55,9 +53,9 @@ func _process(delta):
 
 	if Input.is_action_just_pressed("interact"): interact()
 
-	#DEBUG
+	
 	if Input.is_action_just_pressed("quit"):
-		get_tree().quit()
+		get_tree().change_scene_to_file("res://Menus/main_menu.tscn")
 	
 	if Input.is_action_just_pressed("mouse_tab"):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
