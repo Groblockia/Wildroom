@@ -4,10 +4,6 @@ extends Control
 @onready var optionsButton = $VBoxContainer/OptionsButton
 @onready var quitButton = $VBoxContainer/StartButton
 
-signal start_button
-signal options_button
-signal quit_button
-
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
