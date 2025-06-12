@@ -12,8 +12,10 @@ config_version=5
 
 config/name="Wildroom"
 run/main_scene="uid://bx8qi23eyrsrb"
+run/enable_alt_space_menu=true
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+boot_splash/minimum_display_time=500
 
 [autoload]
 
@@ -84,3 +86,7 @@ respawn={
 3d_physics/layer_2="player"
 3d_physics/layer_3="collectibles"
 3d_physics/layer_4="interactibles"
+
+[rendering]
+
+quality/filters/msaa=1

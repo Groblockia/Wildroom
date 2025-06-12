@@ -24,8 +24,18 @@ func _process(_delta: float) -> void:
 		call_deferred("_on_back_button_pressed")
 
 func msaa_selection():
-	if msaa.selected == 0:
-		pass
+	print(ProjectSettings.get_setting("rendering/anti_aliasing/quality/msaa_3da"))
+	var x = msaa.get_selected_id()
+	match x: 
+		0:
+			RenderingServer.viewport_set_msaa_3d(get_viewport().get_viewport_rid(), RenderingServer.VIEWPORT_MSAA_DISABLED)
+		1:
+			RenderingServer.viewport_set_msaa_3d(get_viewport().get_viewport_rid(), RenderingServer.VIEWPORT_MSAA_2X)
+		2:
+			RenderingServer.viewport_set_msaa_3d(get_viewport().get_viewport_rid(), RenderingServer.VIEWPORT_MSAA_4X)
+		3:
+			RenderingServer.viewport_set_msaa_3d(get_viewport().get_viewport_rid(), RenderingServer.VIEWPORT_MSAA_8X)
+		
 
 func mouse_sensitivity_selection():
 	Global.mouse_sensitivity = mouse_sensitivity_button.value/1000
