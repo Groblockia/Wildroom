@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 Global="*res://Scripts/global.gd"
 MusicManager="*res://Scripts/music_manager.gd"
 SignalManager="*res://Scripts/signal_manager.gd"
+Options="*res://Scripts/options.gd"
 
 [global_group]
 
