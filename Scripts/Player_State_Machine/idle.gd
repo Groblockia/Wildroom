@@ -6,7 +6,6 @@ extends State
 
 func enter() -> void:
 	super()
-	parent.state_label.text = str("Idle_state")
 
 func process_physics(delta):
 	

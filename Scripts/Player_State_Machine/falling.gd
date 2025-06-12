@@ -5,7 +5,6 @@ extends State
 
 func enter():
 	super()
-	parent.state_label.text = str("Falling_state")
 
 func process_physics(delta):
 	parent.velocity.y -= gravity * delta

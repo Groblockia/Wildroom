@@ -85,19 +85,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.71174, 0)
 
 [node name="Camera3D" type="Camera3D" parent="camera_pivot"]
 
-[node name="debug_UI" type="Control" parent="camera_pivot/Camera3D"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Label" type="Label" parent="camera_pivot/Camera3D/debug_UI"]
-layout_mode = 0
-offset_right = 77.0
-offset_bottom = 50.0
-theme_override_font_sizes/font_size = 36
-text = "caca"
-
 [node name="RayCast3D" type="RayCast3D" parent="camera_pivot/Camera3D"]
 target_position = Vector3(0, 0, -3)
 collision_mask = 8

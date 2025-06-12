@@ -6,7 +6,6 @@ extends State
 
 func enter():
 	super()
-	parent.state_label.text = str("Moving_state")
 
 func process_physics(delta):
 	parent.velocity.x = lerp(parent.velocity.x, parent.direction.x * parent.SPEED, delta * parent.ACCELERATION_SPEED)

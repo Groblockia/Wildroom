@@ -8,7 +8,6 @@ extends CharacterBody3D
 @export var SPEED = 4
 
 @onready var state_machine = $StateMachine
-@onready var state_label = $camera_pivot/Camera3D/debug_UI/Label
 @onready var camera = $camera_pivot/Camera3D
 @onready var camera_pivot = $camera_pivot
 @onready var raycast = $camera_pivot/Camera3D/RayCast3D
@@ -19,7 +18,6 @@ var direction :Vector3
 var rot_x = 0.0 # horizontal
 var rot_y = 0.0 # vertical
 
-const SENSITIVITY = 0.001
 const MAX_VERTICAL_ANGLE = deg_to_rad(89)
 
 func _ready():
@@ -31,8 +29,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	#camera movement
 	if event is InputEventMouseMotion && Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		rot_x += event.relative.x * SENSITIVITY
-		rot_y += event.relative.y * SENSITIVITY
+		rot_x += event.relative.x * Global.mouse_sensitivity
+		rot_y += event.relative.y * Global.mouse_sensitivity
 		rot_y = clamp(rot_y, -MAX_VERTICAL_ANGLE, MAX_VERTICAL_ANGLE)
 
 		# Rotation horizontale sur le Player
@@ -53,9 +51,8 @@ func _process(delta):
 
 	if Input.is_action_just_pressed("interact"): interact()
 
-	
-	if Input.is_action_just_pressed("quit"):
-		get_tree().change_scene_to_file("res://Menus/main_menu.tscn")
+	if Input.is_action_just_pressed("esc") && !Global.is_in_optionsMenu:
+		Global.spawn_scene(Global.options)
 	
 	if Input.is_action_just_pressed("mouse_tab"):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
