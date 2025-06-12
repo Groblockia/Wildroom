@@ -37,4 +37,5 @@ func _on_back_button_pressed() -> void:
 
 func _on_main_menu_button_pressed() -> void:
 	Global.is_in_optionsMenu = false
+	queue_free()
 	get_tree().change_scene_to_file("res://Menus/main_menu.tscn")
