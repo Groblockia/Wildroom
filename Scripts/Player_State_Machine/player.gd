@@ -52,7 +52,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("interact"): interact()
 
 	if Input.is_action_just_pressed("esc") && !Global.is_in_optionsMenu:
-		Global.spawn_scene(Global.options)
+		add_child(Global.options_menu.instantiate())
 	
 	if Input.is_action_just_pressed("mouse_tab"):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:

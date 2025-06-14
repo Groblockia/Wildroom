@@ -74,3 +74,7 @@ func _on_main_menu_button_pressed() -> void:
 	queue_free()
 	get_tree().change_scene_to_file("res://Menus/main_menu.tscn")
 	set_settings()
+
+func quit():
+	Global.is_in_optionsMenu = false
+	queue_free()
