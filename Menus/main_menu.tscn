@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bx8qi23eyrsrb"]
+[gd_scene load_steps=3 format=3 uid="uid://bx8qi23eyrsrb"]
 
 [ext_resource type="Script" uid="uid://cjp3scnvkd1uf" path="res://Scripts/main_menu.gd" id="1_jf8mj"]
+[ext_resource type="PackedScene" uid="uid://b1qxs5x83su66" path="res://Menus/settings_menu.tscn" id="2_p3jrs"]
 
 [node name="Main menu" type="Control"]
 layout_mode = 3
@@ -38,6 +39,9 @@ layout_mode = 2
 text = "Quit"
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="SettingsMenu" parent="." instance=ExtResource("2_p3jrs")]
+visible = false
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]

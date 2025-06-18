@@ -1,80 +1,74 @@
-extends Control
+extends Popup
+#gameplay
+@onready var mouse_slider = $PanelContainer/MarginContainer/TabContainer/Gameplay/MarginContainer/VBoxContainer/MouseSensitivity/HSlider
 
-@onready var mouse_sensitivity_button = $PanelContainer/MarginContainer/VBoxContainer/MouseSensitivity_button/HSlider
-@onready var msaa = $PanelContainer/MarginContainer/VBoxContainer/MSAA_button/OptionButton
-@onready var back_button = $PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Back_button
-@onready var mainMenu_button = $PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MainMenu_button
-@onready var vsync_button = $PanelContainer/MarginContainer/VBoxContainer/Vsync_button/CheckButton
+#video
+@onready var msaa = $PanelContainer/MarginContainer/TabContainer/Video/MarginContainer/VBoxContainer/MSAA/OptionButton
+@onready var vsync_button = $PanelContainer/MarginContainer/TabContainer/Video/MarginContainer/VBoxContainer/Vsync/CheckButton
+@onready var display_options = $PanelContainer/MarginContainer/TabContainer/Video/MarginContainer/VBoxContainer/DisplayOptions/OptionButton
+
+#audio
+@onready var master_slider = $PanelContainer/MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/Master/HSlider
 
 func _ready() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	Global.is_in_optionsMenu = true
-	if Global.is_in_mainMenu:
-		mainMenu_button.visible = false
-	else:
-		mainMenu_button.visible = true
-		get_tree().paused = true
-	get_settings()
-	
+	##initialize the display
+	display_options.select(1 if Save.game_data.fullscreen_on else 0)
+	msaa.select(Save.game_data.msaa)
+	vsync_button.button_pressed = Save.game_data.vsync_on
+	mouse_slider.value = Save.game_data.mouse_sens
+	master_slider.value = Save.game_data.master_vol
+	# music_slider.value = Save.game_data.master_vol
+	# sfx_slider.value = Save.game_data.master_vol
+	# ambient_slider.value = Save.game_data.master_vol
+	await get_tree().create_timer(0.001).timeout
+	apply_settings()
 
-func _process(_delta: float) -> void:
-	#print(Global.mouse_sensitivity)
-	mouse_sensitivity_selection()
-	msaa_selection()
-	vsync_toggle()
+#Vsync
+func _on_CheckButton_toggled(button_pressed: bool):
+	GlobalSettings.toggle_vsync(button_pressed)
 
-	if Input.is_action_just_pressed("esc"):
-		call_deferred("_on_back_button_pressed")
 
-func mouse_sensitivity_selection():
-	Global.mouse_sensitivity = mouse_sensitivity_button.value/1000
+# func _on_BrightnessSlider_value_changed(value):
+# 	GlobalSettings.update_brightness(value)
 
-func msaa_selection():
-	var x = msaa.get_selected_id()
-	match x: 
-		0:
-			RenderingServer.viewport_set_msaa_3d(get_viewport().get_viewport_rid(), RenderingServer.VIEWPORT_MSAA_DISABLED)
-		1:
-			RenderingServer.viewport_set_msaa_3d(get_viewport().get_viewport_rid(), RenderingServer.VIEWPORT_MSAA_2X)
-		2:
-			RenderingServer.viewport_set_msaa_3d(get_viewport().get_viewport_rid(), RenderingServer.VIEWPORT_MSAA_4X)
-		3:
-			RenderingServer.viewport_set_msaa_3d(get_viewport().get_viewport_rid(), RenderingServer.VIEWPORT_MSAA_8X)
 
-func vsync_toggle():
-	if vsync_button.button_pressed:	
-		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
-	else:
-		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+func _on_MasterSlider_value_changed(value):
+	GlobalSettings.update_master_vol(value)
 
-func get_settings():
-	mouse_sensitivity_button.value = Options.mouse_sensitivity
-	msaa.selected = Options.msaa
-	vsync_button.button_pressed = Options.vsync_button
 
-func set_settings():
-	Options.mouse_sensitivity = mouse_sensitivity_button.value
-	Options.msaa = msaa.selected
-	Options.vsync_button = vsync_button.button_pressed
+# func _on_MusicSlider_value_changed(value):
+# 	GlobalSettings.update_music_vol(value)
 
-func _on_back_button_pressed() -> void:
-	get_tree().paused = false
-	Global.is_in_optionsMenu = false
-	set_settings()
-	if !Global.is_in_mainMenu:
-		queue_free()
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	else:
-		get_tree().change_scene_to_file("res://Menus/main_menu.tscn")
 
-func _on_main_menu_button_pressed() -> void:
-	get_tree().paused = false
-	Global.is_in_optionsMenu = false
-	Global.is_in_mainMenu = true
-	queue_free()
-	get_tree().change_scene_to_file("res://Menus/main_menu.tscn")
-	set_settings()
+# func _on_SfxSlider_value_changed(value):
+# 	GlobalSettings.update_sfx_vol(value)
 
-func quit():
-	Global.is_in_optionsMenu = false
-	queue_free()
+
+# func _on_AmbientSlider_value_changed(value):
+# 	GlobalSettings.update_ambient_vol(value)
+
+
+#Mouse slider
+func _on_h_slider_drag_ended(_value_changed: bool) -> void:
+	GlobalSettings.update_mouse_sens(mouse_slider.value)
+
+
+#MSAA
+func _on_option_button_item_selected(index: int) -> void:
+	GlobalSettings.msaa_update(index)
+
+
+#DisplayOptions
+func _on_displayButton_item_selected(index: int) -> void:
+	GlobalSettings.toggle_fullscreen(index)
+
+
+func apply_settings():
+	#display options
+	_on_displayButton_item_selected(display_options.get_selected_id())
+	#Mouse slider
+	_on_h_slider_drag_ended(true)
+	#MSAA
+	_on_option_button_item_selected(msaa.get_selected_id())
+	#Vsync
+	_on_CheckButton_toggled(vsync_button.button_pressed)
