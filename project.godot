@@ -22,7 +22,7 @@ boot_splash/minimum_display_time=500
 Global="*res://Scripts/global.gd"
 Save="*res://Scripts/save.gd"
 GlobalSettings="*res://Scripts/global_settings.gd"
-AudioManager="*res://jsp/audio_manager.tscn"
+MusicManager="*res://jsp/music_manager.tscn"
 
 [debug]
 

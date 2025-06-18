@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c14s2x05mxlf5"]
+[gd_scene load_steps=7 format=3 uid="uid://c14s2x05mxlf5"]
 
 [ext_resource type="PackedScene" uid="uid://kw2yhxm71ddj" path="res://Player/player.tscn" id="1_p4erq"]
 [ext_resource type="Texture2D" uid="uid://cpeux5xuf4dpn" path="res://icon.svg" id="2_f87w0"]
+[ext_resource type="Script" uid="uid://brk5jmnn75da6" path="res://Scripts/respawn_checkpoint.gd" id="3_p4erq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qc4db"]
 albedo_texture = ExtResource("2_f87w0")
@@ -9,6 +10,8 @@ uv1_triplanar = true
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_lc1oi"]
 data = PackedVector3Array(-9, -0.5, 7.5, -9, -0.5, -7.5, -9, 0.5, -7.5, 9, -0.5, -7.5, -9, -0.5, -7.5, -9, -0.5, 7.5, -9, 0.5, -7.5, -9, -0.5, -7.5, 9, -0.5, -7.5, -9, 0.5, -7.5, -9, 0.5, 7.5, -9, -0.5, 7.5, -9, -0.5, 7.5, -9, 0.5, 7.5, 9, 0.5, 7.5, 9, 0.5, 7.5, -9, 0.5, 7.5, -9, 0.5, -7.5, -9, -0.5, 7.5, 9, -0.5, 7.5, 9, -0.5, -7.5, 9, 0.5, 7.5, 9, -0.5, 7.5, -9, -0.5, 7.5, 9, -0.5, -7.5, 9, -0.5, 7.5, 9, 0.5, 7.5, 9, -0.5, -7.5, 9, 0.5, -7.5, -9, 0.5, -7.5, -9, 0.5, -7.5, 9, 0.5, -7.5, 9, 0.5, 7.5, 9, 0.5, 7.5, 9, 0.5, -7.5, 9, -0.5, -7.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f87w0"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -28,3 +31,22 @@ shape = SubResource("ConcavePolygonShape3D_lc1oi")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="StaticBody3D/CSGBakedCollisionShape3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 2)
+
+[node name="Respawn_checkpoint" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.10511, 0)
+collision_mask = 2
+script = ExtResource("3_p4erq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Respawn_checkpoint"]
+shape = SubResource("BoxShape3D_f87w0")
+
+[node name="Respawn_checkpoint2" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.84204, 1.10511, -4.69699)
+collision_mask = 2
+script = ExtResource("3_p4erq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Respawn_checkpoint2"]
+shape = SubResource("BoxShape3D_f87w0")
+
+[connection signal="body_entered" from="Respawn_checkpoint" to="Respawn_checkpoint" method="_on_body_entered"]
+[connection signal="body_entered" from="Respawn_checkpoint2" to="Respawn_checkpoint2" method="_on_body_entered"]

@@ -44,7 +44,7 @@ size = Vector2(2, 2)
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 collision_layer = 2
-collision_mask = 5
+collision_mask = 13
 script = ExtResource("1_l8h54")
 ACCELERATION_SPEED = 9
 DECCELERATION_SPEED = 11

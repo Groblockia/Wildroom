@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://ckdj7jaq2fxx2"]
+
+[ext_resource type="Script" uid="uid://x1kvrdb0c4vj" path="res://Scripts/music_manager.gd" id="1_707la"]
+[ext_resource type="AudioStream" uid="uid://bd1sy154mmq70" path="res://Assets/Music/Wildroom__Intense-1-Ambience__Draft-01__Render-02.mp3" id="2_hl4bq"]
+[ext_resource type="AudioStream" uid="uid://d1ufc0q4mwyeh" path="res://Assets/Music/Wildroom__Intense-2-Ambience__Draft-01__Render-02.mp3" id="3_giurl"]
+[ext_resource type="AudioStream" uid="uid://d3qi2vp21cd1w" path="res://Assets/Music/Wildroom__Intense-3-Ambience__Draft-01__Render-02.mp3" id="4_4yd8f"]
+[ext_resource type="AudioStream" uid="uid://bahrb05u8hcnk" path="res://Assets/Music/Wildroom__Suspense-Ambience__Draft-01__Render-02.mp3" id="5_aap2y"]
+
+[node name="MusicManager" type="Node"]
+script = ExtResource("1_707la")
+
+[node name="Intense1" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_hl4bq")
+bus = &"Music"
+
+[node name="Intense2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_giurl")
+bus = &"Music"
+
+[node name="Intense3" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_4yd8f")
+bus = &"Music"
+
+[node name="Suspense" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_aap2y")
+bus = &"Music"

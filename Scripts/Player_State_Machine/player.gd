@@ -21,6 +21,7 @@ var rot_y = 0.0 # vertical
 const MAX_VERTICAL_ANGLE = deg_to_rad(89)
 
 var mouse_sensitivity
+var spawn_point
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -58,13 +59,6 @@ func _process(delta):
 
 	if Input.is_action_just_pressed("interact"): interact()
 
-	#DEBUG
-	if Input.is_action_just_pressed("mouse_tab"):
-		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		else:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
 
 func interact():
 	var obj = raycast.get_collider()
@@ -77,3 +71,6 @@ func interact():
 
 func _update_mouse_sens(value):
 	mouse_sensitivity = value/1000
+
+func respawn():
+	position = spawn_point

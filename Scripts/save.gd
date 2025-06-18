@@ -27,7 +27,6 @@ func load_data():
 	file.close()
 
 func save_data():
-	print("save_data called")
 	var file = FileAccess.open(SAVEFILE, FileAccess.WRITE)
 	file.store_var(game_data)
 	file.close()
