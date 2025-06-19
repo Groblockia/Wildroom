@@ -90,11 +90,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.71174, 0)
 target_position = Vector3(0, 0, -3)
 collision_mask = 8
 
-[node name="CanvasLayer" type="CanvasLayer" parent="camera_pivot/Camera3D"]
+[node name="UI" type="CanvasLayer" parent="camera_pivot/Camera3D"]
+
+[node name="HintLabel" type="Label" parent="camera_pivot/Camera3D/UI"]
+offset_left = 575.5
+offset_top = 453.0
+offset_right = 576.5
+offset_bottom = 486.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
+
+[node name="tempshaders" type="Node" parent="camera_pivot/Camera3D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="camera_pivot/Camera3D/tempshaders"]
 visible = false
 follow_viewport_enabled = true
 
-[node name="vignette shader" type="ColorRect" parent="camera_pivot/Camera3D/CanvasLayer"]
+[node name="vignette shader" type="ColorRect" parent="camera_pivot/Camera3D/tempshaders/CanvasLayer"]
 z_index = 1
 material = SubResource("ShaderMaterial_od3ui")
 anchors_preset = 15
@@ -104,13 +118,15 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="PSX_style shader" type="MeshInstance3D" parent="camera_pivot/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+[node name="PSX_style shader" type="MeshInstance3D" parent="camera_pivot/Camera3D/tempshaders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.71174, -1)
 visible = false
 mesh = SubResource("QuadMesh_vtle1")
+skeleton = NodePath("../..")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 omni_range = 8.31989
 
 [node name="PauseMenu" parent="." instance=ExtResource("9_00tjw")]
+visible = false

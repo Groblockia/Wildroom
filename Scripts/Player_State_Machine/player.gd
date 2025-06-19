@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody3D
 
+signal interacted
+
 @export var ACCELERATION_SPEED = 2
 @export var DECCELERATION_SPEED = 2
 @export var AIR_DECCELERATION_SPEED = 1
@@ -11,6 +13,7 @@ extends CharacterBody3D
 @onready var camera = $camera_pivot/Camera3D
 @onready var camera_pivot = $camera_pivot
 @onready var raycast = $camera_pivot/Camera3D/RayCast3D
+@onready var hint_label = $camera_pivot/Camera3D/UI/HintLabel
 
 var input_dir : Vector2
 var direction :Vector3
@@ -56,17 +59,21 @@ func _physics_process(delta: float) -> void:
 
 func _process(delta):
 	state_machine.process_frame(delta)
-
-	if Input.is_action_just_pressed("interact"): interact()
+	hint_label.text = ""
+	interact()
 
 
 func interact():
 	var obj = raycast.get_collider()
-
+	
 	if obj == null:
 		pass
-	elif obj.is_in_group("lever"):
-		obj.toggle()
+	else:
+		hint_label.text = "Press 'E' to interact"
+		if Input.is_action_just_pressed("interact"):
+			interacted.connect(obj.get_parent()._interact)
+			interacted.emit(obj.name)
+			interacted.disconnect(obj.get_parent()._interact)
 
 
 func _update_mouse_sens(value):
@@ -74,3 +81,6 @@ func _update_mouse_sens(value):
 
 func respawn():
 	position = spawn_point
+
+func show_text():
+	pass
