@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://gleq0giywm3n"]
+
+[ext_resource type="Script" uid="uid://tpjea7jlfdel" path="res://Scripts/Puzzles/keycode_1.gd" id="1_qy7ix"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_qsvbx"]
+size = Vector3(0.5, 0.8, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qy7ix"]
+size = Vector3(0.5, 0.8, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qy7ix"]
+size = Vector3(0.3, 0.6, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x6j3j"]
+size = Vector3(0.3, 0.6, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x6j3j"]
+size = Vector3(1.5, 2, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_033t4"]
+size = Vector3(1.5, 2, 0.2)
+
+[node name="Keycode1" type="Node3D"]
+script = ExtResource("1_qy7ix")
+
+[node name="Keypad" type="StaticBody3D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Keypad"]
+mesh = SubResource("BoxMesh_qsvbx")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Keypad"]
+shape = SubResource("BoxShape3D_qy7ix")
+
+[node name="Note" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.959634, 0, 0)
+collision_layer = 8
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Note"]
+mesh = SubResource("BoxMesh_qy7ix")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Note"]
+shape = SubResource("BoxShape3D_x6j3j")
+
+[node name="DoorTest" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.55108, 1, 0)
+collision_layer = 8
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="DoorTest"]
+mesh = SubResource("BoxMesh_x6j3j")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoorTest"]
+shape = SubResource("BoxShape3D_033t4")
