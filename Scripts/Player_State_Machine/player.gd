@@ -21,6 +21,9 @@ var direction :Vector3
 var rot_x = 0.0 # horizontal
 var rot_y = 0.0 # vertical
 
+@onready var defaultCameraPosition = camera.position
+@onready var defaultCameraRotation = camera.rotation
+
 const MAX_VERTICAL_ANGLE = deg_to_rad(89)
 
 var mouse_sensitivity
@@ -32,6 +35,7 @@ func _ready():
 	GlobalSettings.mouse_sens_updated.connect(_update_mouse_sens)
 	print("mouse_sensi = ", mouse_sensitivity)
 	Global.player_move_camera_to_screen.connect(move_camera_to_target)
+	Global.quit_computer.connect(reset_camera)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -99,10 +103,9 @@ func move_camera_to_target(targetPos,targetOrientation):
 	var tween = get_tree().create_tween()
 	tween.set_parallel()
 
-	var forward_direction: Vector3 = -targetOrientation.normalized()
-	var in_front_position: Vector3 = targetPos + forward_direction * 1
+	tween.tween_property(camera, "global_position", targetPos, 1.0)
+	tween.tween_property(camera, "global_rotation", targetOrientation, 1.0)
 
-	tween.tween_property(camera, "global_position", in_front_position, 2.0)
-	#tween.tween_property(camera, "global_transform.basis.z", -targetOrientation, 2.0)
-	# for i in range(10):
-	# 	transform = transform.interpolate_with( transform.looking_at(targetPos), 0.1)
+func reset_camera():
+	camera.position = defaultCameraPosition
+	camera.rotation = defaultCameraRotation

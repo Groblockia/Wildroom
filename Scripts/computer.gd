@@ -1,6 +1,7 @@
 extends Node3D
 
 signal move_camera_to_screen(targetPos, targetOrientation)
+signal exit_computer
 
 # Used for checking if the mouse is inside the Area3D.
 var is_mouse_inside = false
@@ -12,13 +13,18 @@ var last_event_time: float = -1.0
 @onready var node_viewport = $SubViewport
 @onready var node_quad = $Quad
 @onready var node_area = $Quad/Area3D
+@onready var helper_pov = $helperPov
 
 func _ready():
 	node_area.mouse_entered.connect(_mouse_entered_area)
 	node_area.mouse_exited.connect(_mouse_exited_area)
 	node_area.input_event.connect(_mouse_input_event)
 	move_camera_to_screen.connect(Global._player_move_camera_to_screen)
+	exit_computer.connect(Global._quit_computer)
 
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("respawn"):
+		_exit_computer()
 
 func _mouse_entered_area():
 	is_mouse_inside = true
@@ -106,4 +112,9 @@ func _mouse_input_event(_camera: Camera3D, event: InputEvent, event_position: Ve
 func _interact(objName):
 	#print(objName)
 	#print(-global_transform.basis.z)
-	move_camera_to_screen.emit(self.position, -global_transform.basis.z)
+	move_camera_to_screen.emit(helper_pov.global_position, helper_pov.global_rotation)
+
+
+#link this to a gui button in the screen to exit
+func _exit_computer():
+	exit_computer.emit()

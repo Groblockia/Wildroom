@@ -88,3 +88,6 @@ visible = false
 layout_mode = 2
 texture = ExtResource("1_4xga7")
 metadata/_tab_index = 2
+
+[node name="helperPov" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.567809)
