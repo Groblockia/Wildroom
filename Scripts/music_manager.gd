@@ -19,6 +19,7 @@ func stop_music(music):
 
 func crossfade(current_music:AudioStreamPlayer2D, target_music:AudioStreamPlayer2D, duration := 4.0):
 	var tween = get_tree().create_tween()
+	tween.set_parallel()
 	target_music.volume_linear = 0
 	target_music.play()
 	

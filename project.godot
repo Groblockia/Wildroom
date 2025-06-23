@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Wildroom"
+config/tags=PackedStringArray("gamejam", "working_on")
 run/main_scene="uid://bx8qi23eyrsrb"
 run/enable_alt_space_menu=true
 config/features=PackedStringArray("4.4", "Forward Plus")
@@ -23,10 +24,6 @@ Global="*res://Scripts/global.gd"
 Save="*res://Scripts/save.gd"
 GlobalSettings="*res://Scripts/global_settings.gd"
 MusicManager="*res://misc/music_manager.tscn"
-
-[debug]
-
-settings/stdout/print_fps=true
 
 [global_group]
 

@@ -31,6 +31,7 @@ func _ready():
 	state_machine.init(self)
 	GlobalSettings.mouse_sens_updated.connect(_update_mouse_sens)
 	print("mouse_sensi = ", mouse_sensitivity)
+	Global.player_move_camera_to_screen.connect(move_camera_to_target)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -62,6 +63,12 @@ func _process(delta):
 	hint_label.text = ""
 	interact()
 
+	if Input.is_action_just_pressed("mouse_tab"):
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
 
 func interact():
 	var obj = raycast.get_collider()
@@ -79,8 +86,23 @@ func interact():
 func _update_mouse_sens(value):
 	mouse_sensitivity = value/1000
 
+
 func respawn():
 	position = spawn_point
 
+
 func show_text():
 	pass
+
+
+func move_camera_to_target(targetPos,targetOrientation):
+	var tween = get_tree().create_tween()
+	tween.set_parallel()
+
+	var forward_direction: Vector3 = -targetOrientation.normalized()
+	var in_front_position: Vector3 = targetPos + forward_direction * 1
+
+	tween.tween_property(camera, "global_position", in_front_position, 2.0)
+	#tween.tween_property(camera, "global_transform.basis.z", -targetOrientation, 2.0)
+	# for i in range(10):
+	# 	transform = transform.interpolate_with( transform.looking_at(targetPos), 0.1)

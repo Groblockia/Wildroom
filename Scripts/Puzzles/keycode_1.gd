@@ -3,10 +3,10 @@ extends Node3D
 @onready var keypad = $Keypad
 @onready var note = $Note
 
-func _interact(name):
-	if name == keypad.name:
+func _interact(namee):
+	if namee == keypad.name:
 		keypad_work()
-	if name == note.name:
+	if namee == note.name:
 		note_work()
 
 func keypad_work():

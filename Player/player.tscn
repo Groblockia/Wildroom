@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://kw2yhxm71ddj"]
+[gd_scene load_steps=14 format=3 uid="uid://kw2yhxm71ddj"]
 
 [ext_resource type="Script" uid="uid://dqm1cfwcdxjfd" path="res://Scripts/Player_State_Machine/player.gd" id="1_l8h54"]
 [ext_resource type="Script" uid="uid://dt1xk1l6cl4fw" path="res://Scripts/Player_State_Machine/state_machine.gd" id="2_k53q1"]
@@ -11,8 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://d25n1epq705uj" path="res://Menus/pause_menu.tscn" id="9_00tjw"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_k53q1"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_fhl08"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_od3ui"]
 shader = ExtResource("7_vtle1")
@@ -52,9 +50,6 @@ SPEED = 6
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_k53q1")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_fhl08")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
 script = ExtResource("2_k53q1")
