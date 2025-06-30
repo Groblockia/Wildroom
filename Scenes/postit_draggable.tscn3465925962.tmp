@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://br4ek77c0mjox"]
+
+[ext_resource type="Script" uid="uid://d4h8n6y0y4x4v" path="res://Scripts/postit_draggable.gd" id="1_jq52g"]
+[ext_resource type="Script" uid="uid://d1nil2jp1qmsq" path="res://Scenes/temp_camera.gd" id="2_eq7bw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_jq52g"]
+size = Vector3(2.33, 1.495, 0.065)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jq52g"]
+albedo_color = Color(0.214876, 0.138527, 0.138527, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6ncfi"]
+size = Vector3(0.2, 0.2, 0.025)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6ncfi"]
+size = Vector3(0.2, 0.2, 0.025)
+
+[node name="Postit_board" type="Node3D"]
+script = ExtResource("1_jq52g")
+
+[node name="board" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_jq52g")
+surface_material_override/0 = SubResource("StandardMaterial3D_jq52g")
+
+[node name="Postit" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00240922, -0.00516748, 0.235149)
+collision_layer = 15
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Postit"]
+shape = SubResource("BoxShape3D_6ncfi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Postit"]
+mesh = SubResource("BoxMesh_6ncfi")
+skeleton = NodePath("../..")
+
+[node name="temp_camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.17773)
+script = ExtResource("2_eq7bw")
+
+[connection signal="input_event" from="Postit" to="." method="_on_area_3d_input_event"]
+[connection signal="mouse_entered" from="Postit" to="." method="_on_area_3d_mouse_entered"]

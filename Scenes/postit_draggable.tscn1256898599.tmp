@@ -1,0 +1,97 @@
+[gd_scene load_steps=11 format=3 uid="uid://br4ek77c0mjox"]
+
+[ext_resource type="Script" uid="uid://d4h8n6y0y4x4v" path="res://Scripts/postit_draggable.gd" id="1_jq52g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6ncfi"]
+size = Vector3(0.2, 0.2, 0.025)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6ncfi"]
+size = Vector3(0.2, 0.2, 0.025)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eq7bw"]
+size = Vector3(0.2, 0.2, 0.025)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vmdpe"]
+size = Vector3(0.2, 0.2, 0.025)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jq52g"]
+size = Vector3(0.28, 0.345, 0.025)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gy1i8"]
+size = Vector3(0.28, 0.345, 0.025)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jq52g"]
+size = Vector3(2.5, 1.5, 0.06)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jq52g"]
+albedo_color = Color(0.214876, 0.138527, 0.138527, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vmdpe"]
+size = Vector3(2.5, 1.5, 0.06)
+
+[node name="Postit_board" type="Node3D"]
+script = ExtResource("1_jq52g")
+
+[node name="Postit1" type="Area3D" parent="." groups=["draggable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.002, 0.49, 0)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Postit1"]
+shape = SubResource("BoxShape3D_6ncfi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Postit1"]
+mesh = SubResource("BoxMesh_6ncfi")
+skeleton = NodePath("../..")
+
+[node name="Postit2" type="Area3D" parent="." groups=["draggable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.371, 0.444, 0)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Postit2"]
+shape = SubResource("BoxShape3D_eq7bw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Postit2"]
+mesh = SubResource("BoxMesh_vmdpe")
+skeleton = NodePath("../..")
+
+[node name="PlaceCheck1" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.88571, 0.444, 0)
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlaceCheck1"]
+shape = SubResource("BoxShape3D_jq52g")
+
+[node name="PlaceCheck2" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.88571, 0.0219358, 0)
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlaceCheck2"]
+shape = SubResource("BoxShape3D_gy1i8")
+
+[node name="helperPov" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="board" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.05)
+mesh = SubResource("BoxMesh_jq52g")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_jq52g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.05)
+shape = SubResource("BoxShape3D_vmdpe")
+
+[connection signal="input_event" from="Postit1" to="." method="_on_area_3d_input_event"]
+[connection signal="mouse_entered" from="Postit1" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="input_event" from="Postit2" to="." method="_on_area_3d_input_event"]
+[connection signal="mouse_entered" from="Postit2" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="area_entered" from="PlaceCheck1" to="." method="_on_place_check_area_entered" binds= [NodePath(".")]]
+[connection signal="area_entered" from="PlaceCheck2" to="." method="_on_place_check_area_entered" binds= [NodePath(".")]]

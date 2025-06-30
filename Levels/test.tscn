@@ -1,8 +1,49 @@
-[gd_scene load_steps=6 format=3 uid="uid://c14s2x05mxlf5"]
+[gd_scene load_steps=32 format=3 uid="uid://c14s2x05mxlf5"]
 
-[ext_resource type="PackedScene" uid="uid://kw2yhxm71ddj" path="res://Player/player.tscn" id="1_p4erq"]
+[ext_resource type="Script" uid="uid://dqm1cfwcdxjfd" path="res://Scripts/Player_State_Machine/player.gd" id="1_tqcie"]
 [ext_resource type="Texture2D" uid="uid://cpeux5xuf4dpn" path="res://icon.svg" id="2_f87w0"]
+[ext_resource type="Script" uid="uid://dt1xk1l6cl4fw" path="res://Scripts/Player_State_Machine/state_machine.gd" id="2_qqhdm"]
+[ext_resource type="Script" uid="uid://cidy0bdb4nghc" path="res://Scripts/Player_State_Machine/moving.gd" id="3_nqkku"]
 [ext_resource type="PackedScene" uid="uid://dh38j5cs1u7ej" path="res://Scenes/computer.tscn" id="3_p4erq"]
+[ext_resource type="Script" uid="uid://d1qqjkkjcwjo2" path="res://Scripts/Player_State_Machine/jumping.gd" id="4_6i02l"]
+[ext_resource type="Script" uid="uid://ce2psm8kmakot" path="res://Scripts/Player_State_Machine/falling.gd" id="5_5hgop"]
+[ext_resource type="Script" uid="uid://df66y12g1xr1d" path="res://Scripts/Player_State_Machine/idle.gd" id="6_hnl6u"]
+[ext_resource type="Shader" uid="uid://cytbtjvdw7gkw" path="res://Assets/Shaders/vignette.gdshader" id="7_k56qn"]
+[ext_resource type="Script" uid="uid://dws6dxqv474gw" path="res://Player/camera_3d.gd" id="7_tqcie"]
+[ext_resource type="Shader" uid="uid://dcx86sijad55c" path="res://Assets/Shaders/psx_style.gdshader" id="8_ajqje"]
+[ext_resource type="PackedScene" uid="uid://d25n1epq705uj" path="res://Menus/pause_menu.tscn" id="9_piar3"]
+[ext_resource type="Script" uid="uid://d4h8n6y0y4x4v" path="res://Scripts/postit_draggable.gd" id="13_qqhdm"]
+[ext_resource type="Script" uid="uid://bepenm2qvu6ey" path="res://Scripts/postit_item.gd" id="14_nqkku"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_k53q1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_od3ui"]
+shader = ExtResource("7_k56qn")
+shader_parameter/inner_radius = 0.2
+shader_parameter/outer_radius = 1.0
+shader_parameter/vignette_strength = 0.7
+shader_parameter/dither_strength = 0.0
+shader_parameter/vignette_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_00tjw"]
+render_priority = 0
+shader = ExtResource("8_ajqje")
+shader_parameter/enable_fog = true
+shader_parameter/fog_color = Color(0.187722, 0.187722, 0.187722, 1)
+shader_parameter/noise_color = Color(0.513577, 0.513577, 0.513577, 1)
+shader_parameter/fog_distance = 10.0
+shader_parameter/fog_fade_range = 8.0
+shader_parameter/enable_noise = false
+shader_parameter/noise_time_fac = 4.0
+shader_parameter/enable_color_limitation = false
+shader_parameter/color_levels = 512
+shader_parameter/enable_dithering = true
+shader_parameter/dither_strength = 0.5
+
+[sub_resource type="QuadMesh" id="QuadMesh_vtle1"]
+material = SubResource("ShaderMaterial_00tjw")
+flip_faces = true
+size = Vector2(2, 2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qc4db"]
 albedo_texture = ExtResource("2_f87w0")
@@ -11,12 +52,131 @@ uv1_triplanar = true
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_p4erq"]
 data = PackedVector3Array(-64.02, -0.5, 59.26, -64.02, -0.5, -59.26, -64.02, 0.5, -59.26, 64.02, -0.5, -59.26, -64.02, -0.5, -59.26, -64.02, -0.5, 59.26, -64.02, 0.5, -59.26, -64.02, -0.5, -59.26, 64.02, -0.5, -59.26, -64.02, 0.5, -59.26, -64.02, 0.5, 59.26, -64.02, -0.5, 59.26, -64.02, -0.5, 59.26, -64.02, 0.5, 59.26, 64.02, 0.5, 59.26, 64.02, 0.5, 59.26, -64.02, 0.5, 59.26, -64.02, 0.5, -59.26, -64.02, -0.5, 59.26, 64.02, -0.5, 59.26, 64.02, -0.5, -59.26, 64.02, 0.5, 59.26, 64.02, -0.5, 59.26, -64.02, -0.5, 59.26, 64.02, -0.5, -59.26, 64.02, -0.5, 59.26, 64.02, 0.5, 59.26, 64.02, -0.5, -59.26, 64.02, 0.5, -59.26, -64.02, 0.5, -59.26, -64.02, 0.5, -59.26, 64.02, 0.5, -59.26, 64.02, 0.5, 59.26, 64.02, 0.5, 59.26, 64.02, 0.5, -59.26, 64.02, -0.5, -59.26)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_6ncfi"]
+size = Vector3(0.2, 0.2, 0.025)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eq7bw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_6ncfi"]
+material = SubResource("StandardMaterial3D_eq7bw")
+size = Vector3(0.2, 0.2, 0.025)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eq7bw"]
+size = Vector3(0.2, 0.2, 0.025)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vmdpe"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vmdpe"]
+material = SubResource("StandardMaterial3D_vmdpe")
+size = Vector3(0.2, 0.2, 0.025)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jq52g"]
+size = Vector3(0.1, 0.1, 0.025)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gy1i8"]
+size = Vector3(0.1, 0.1, 0.025)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jq52g"]
+size = Vector3(2.5, 1.5, 0.06)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jq52g"]
+albedo_color = Color(0.214876, 0.138527, 0.138527, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vmdpe"]
+size = Vector3(2.5, 1.5, 0.06)
+
 [node name="Node3D" type="Node3D"]
 
-[node name="CharacterBody3D" parent="." instance=ExtResource("1_p4erq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.72975, 0)
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.13746, 0)
+collision_layer = 2
+collision_mask = 13
+script = ExtResource("1_tqcie")
+ACCELERATION_SPEED = 9
+DECCELERATION_SPEED = 11
+SPEED = 6
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_k53q1")
+
+[node name="StateMachine" type="Node" parent="Player" node_paths=PackedStringArray("starting_state")]
+script = ExtResource("2_qqhdm")
+starting_state = NodePath("Idle")
+
+[node name="Moving" type="Node" parent="Player/StateMachine" node_paths=PackedStringArray("jumping_state", "falling_state", "idle_state")]
+script = ExtResource("3_nqkku")
+jumping_state = NodePath("../Jumping")
+falling_state = NodePath("../Falling")
+idle_state = NodePath("../Idle")
+
+[node name="Jumping" type="Node" parent="Player/StateMachine" node_paths=PackedStringArray("falling_state")]
+script = ExtResource("4_6i02l")
+falling_state = NodePath("../Falling")
+
+[node name="Falling" type="Node" parent="Player/StateMachine" node_paths=PackedStringArray("moving_state", "idle_state")]
+script = ExtResource("5_5hgop")
+moving_state = NodePath("../Moving")
+idle_state = NodePath("../Idle")
+
+[node name="Idle" type="Node" parent="Player/StateMachine" node_paths=PackedStringArray("moving_state", "jumping_state", "falling_state")]
+script = ExtResource("6_hnl6u")
+moving_state = NodePath("../Moving")
+jumping_state = NodePath("../Jumping")
+falling_state = NodePath("../Falling")
+
+[node name="camera_pivot" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.71174, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Player/camera_pivot"]
+script = ExtResource("7_tqcie")
+
+[node name="RayCast3D" type="RayCast3D" parent="Player/camera_pivot/Camera3D"]
+target_position = Vector3(0, 0, -2)
+collision_mask = 8
+
+[node name="UI" type="CanvasLayer" parent="Player/camera_pivot/Camera3D"]
+
+[node name="HintLabel" type="Label" parent="Player/camera_pivot/Camera3D/UI"]
+offset_left = 575.5
+offset_top = 453.0
+offset_right = 576.5
+offset_bottom = 486.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
+
+[node name="tempshaders" type="Node" parent="Player/camera_pivot/Camera3D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Player/camera_pivot/Camera3D/tempshaders"]
+visible = false
+follow_viewport_enabled = true
+
+[node name="vignette shader" type="ColorRect" parent="Player/camera_pivot/Camera3D/tempshaders/CanvasLayer"]
+z_index = 1
+material = SubResource("ShaderMaterial_od3ui")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PSX_style shader" type="MeshInstance3D" parent="Player/camera_pivot/Camera3D/tempshaders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.71174, -1)
+visible = false
+mesh = SubResource("QuadMesh_vtle1")
+skeleton = NodePath("../..")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+omni_range = 8.31989
+
+[node name="PauseMenu" parent="Player" instance=ExtResource("9_piar3")]
+visible = false
 
 [node name="floor" type="StaticBody3D" parent="."]
+input_ray_pickable = false
 
 [node name="CSGBox3D" type="CSGBox3D" parent="floor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0581379, 0, -1.14247)
@@ -31,4 +191,105 @@ shape = SubResource("ConcavePolygonShape3D_p4erq")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0581379, 3, 0.85753)
 
 [node name="Computer" parent="." instance=ExtResource("3_p4erq")]
-transform = Transform3D(0.58313, 0, 0.812379, 0, 1, 0, -0.812379, 0, 0.58313, 0, 2.22942, -3.72507)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.22942, -3.72507)
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00273958, 2.59891, -3.7222)
+text = "Computer"
+
+[node name="Label3D2" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.70193, 3.0869, -3.03314)
+text = "Post-it Board"
+
+[node name="Postit_board" type="Node3D" parent="." node_paths=PackedStringArray("camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.71145, 2.0406, -3.09441)
+script = ExtResource("13_qqhdm")
+camera = NodePath("../Player/camera_pivot/Camera3D")
+
+[node name="helperPov" type="Node3D" parent="Postit_board"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="Postit1_initialPos" type="Node3D" parent="Postit_board"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.313121, 0.339412, 0)
+
+[node name="Postit1" type="Area3D" parent="Postit_board/Postit1_initialPos" groups=["draggable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.51989, 0, 0.319779)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("14_nqkku")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Postit_board/Postit1_initialPos/Postit1"]
+shape = SubResource("BoxShape3D_6ncfi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Postit_board/Postit1_initialPos/Postit1"]
+mesh = SubResource("BoxMesh_6ncfi")
+skeleton = NodePath("../../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Postit_board/Postit1_initialPos/Postit1"]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Postit_board/Postit1_initialPos/Postit1/StaticBody3D"]
+shape = SubResource("BoxShape3D_6ncfi")
+
+[node name="Postit2_initialPos" type="Node3D" parent="Postit_board"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.381284, 0.294899, 0.00165153)
+
+[node name="Postit2" type="Area3D" parent="Postit_board/Postit2_initialPos" groups=["draggable"]]
+transform = Transform3D(1, 0, 0, 0, 0.711499, -0.702687, 0, 0.702687, 0.711499, 4.49339, 0, 2.13519)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("14_nqkku")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Postit_board/Postit2_initialPos/Postit2"]
+shape = SubResource("BoxShape3D_eq7bw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Postit_board/Postit2_initialPos/Postit2"]
+mesh = SubResource("BoxMesh_vmdpe")
+skeleton = NodePath("../../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Postit_board/Postit2_initialPos/Postit2"]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Postit_board/Postit2_initialPos/Postit2/StaticBody3D"]
+shape = SubResource("BoxShape3D_eq7bw")
+
+[node name="PlaceCheck1" type="Area3D" parent="Postit_board"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.88571, 0.444, 0)
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Postit_board/PlaceCheck1"]
+shape = SubResource("BoxShape3D_jq52g")
+
+[node name="PlaceCheck2" type="Area3D" parent="Postit_board"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.88571, 0.0219358, 0)
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Postit_board/PlaceCheck2"]
+shape = SubResource("BoxShape3D_gy1i8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Postit_board"]
+collision_layer = 8
+collision_mask = 0
+
+[node name="board" type="MeshInstance3D" parent="Postit_board/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.05)
+mesh = SubResource("BoxMesh_jq52g")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_jq52g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Postit_board/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.05)
+shape = SubResource("BoxShape3D_vmdpe")
+
+[connection signal="input_event" from="Postit_board/Postit1_initialPos/Postit1" to="Postit_board" method="_on_area_3d_input_event"]
+[connection signal="mouse_entered" from="Postit_board/Postit1_initialPos/Postit1" to="Postit_board" method="_on_area_3d_mouse_entered"]
+[connection signal="input_event" from="Postit_board/Postit2_initialPos/Postit2" to="Postit_board" method="_on_area_3d_input_event"]
+[connection signal="mouse_entered" from="Postit_board/Postit2_initialPos/Postit2" to="Postit_board" method="_on_area_3d_mouse_entered"]
+[connection signal="area_entered" from="Postit_board/PlaceCheck1" to="Postit_board" method="_on_place_check_area_entered" binds= [&"PlaceCheck1"]]
+[connection signal="area_exited" from="Postit_board/PlaceCheck1" to="Postit_board" method="_on_place_check_area_exited" binds= [&"PlaceCheck1"]]
+[connection signal="area_entered" from="Postit_board/PlaceCheck2" to="Postit_board" method="_on_place_check_area_entered" binds= [&"PlaceCheck2"]]
+[connection signal="area_exited" from="Postit_board/PlaceCheck2" to="Postit_board" method="_on_place_check_area_exited" binds= [&"PlaceCheck2"]]

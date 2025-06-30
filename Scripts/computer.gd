@@ -10,6 +10,8 @@ var last_event_pos2D = null
 # The time of the last event in seconds since engine start.
 var last_event_time: float = -1.0
 
+var show_interaction_text = true
+
 @onready var node_viewport = $SubViewport
 @onready var node_quad = $Quad
 @onready var node_area = $Quad/Area3D
@@ -20,11 +22,12 @@ func _ready():
 	node_area.mouse_exited.connect(_mouse_exited_area)
 	node_area.input_event.connect(_mouse_input_event)
 	move_camera_to_screen.connect(Global._player_move_camera_to_screen)
-	exit_computer.connect(Global._quit_computer)
+	exit_computer.connect(Global._quit_screen)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("respawn"):
 		_exit_computer()
+
 
 func _mouse_entered_area():
 	is_mouse_inside = true
@@ -109,12 +112,11 @@ func _mouse_input_event(_camera: Camera3D, event: InputEvent, event_position: Ve
 	node_viewport.push_input(event)
 
 
-func _interact(objName):
-	#print(objName)
-	#print(-global_transform.basis.z)
+func _interact(_objName):
 	move_camera_to_screen.emit(helper_pov.global_position, helper_pov.global_rotation)
-
+	show_interaction_text = false
 
 #link this to a gui button in the screen to exit
 func _exit_computer():
 	exit_computer.emit()
+	show_interaction_text = true
